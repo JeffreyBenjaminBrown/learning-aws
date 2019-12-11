@@ -1,0 +1,18 @@
+* internet
+** www.example.com is a subdomain of example.com
+* AWS lingo
+** "Route 53" is a ("domain router"?)
+** Simple Storage Service = S3 = buckets
+*** data can be "queried in place" 
+*** data can be "selectively retrieved"
+with "S3 Select"
+*** bucket <=> url
+  Each (sub)domain needs its own bucket,
+  of the same name.
+*** buckets can do versioning
+  https://docs.aws.amazon.com/AmazonS3/latest/user-guide/enable-versioning.html
+*** use tags to track the cost of a bucket
+  thttps://docs.aws.amazon.com/AmazonS3/latest/dev//CostAllocTagging.html
+** S3 "Access Points"
+Are URLs.
+Are to control who can access what.
