@@ -9,7 +9,7 @@
             "s3:GetObject"
          ],
          "Resource":[
-            "arn:aws:s3:::jeff-brown.com/*"
+            "arn:aws:s3:::jefbrown.net/*"
          ]
       }
    ]
