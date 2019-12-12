@@ -21,10 +21,11 @@ If it works,
 Route 53 can then be used to make the content available to the rest of the world,
 from a domain you registered (e.g. "jefbrown.net").
 ** PITFALL: S3 can make buckets for inaccessible URLs
- If I register the domain jbb-1.net,
- I can make a bucket called jbb1.net.
+ If I register the domain `jbb-1.net`,
+ I can make a bucket called `jbb1.net`.
  I'll get errors, though,
-    when I try to publish it as a website.
+ when I try to publish it as a website,
+ because `jbb1.net` is not the domain I own.
 ** step 1: register a domain
 Amazon lets you do that via "Route 53".
 It might be possible to use someone else's (cheaper) service.
