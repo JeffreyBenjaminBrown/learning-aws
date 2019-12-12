@@ -1,0 +1,35 @@
+* URLs
+** the lessons
+ https://aws.amazon.com/getting-started/use-cases
+** S3 home
+https://console.aws.amazon.com/s3/home
+* internet
+** www.example.com is a subdomain of example.com
+* for saving money
+** "requester pays" is an S3 option
+
+* AWS lingo
+** "Route 53" is a ("domain router"?)
+** Simple Storage Service = S3 = buckets
+*** data can be "queried in place"
+*** data can be "selectively retrieved"
+with "S3 Select"
+*** bucket <=> url
+  Each (sub)domain needs its own bucket,
+  of the same name.
+*** buckets can do versioning
+  https://docs.aws.amazon.com/AmazonS3/latest/user-guide/enable-versioning.html
+*** use tags to track the cost of a bucket
+  thttps://docs.aws.amazon.com/AmazonS3/latest/dev//CostAllocTagging.html
+** S3 "Access Points"
+Are URLs.
+Are to control who can access what.
+* website endpoint formatting is weird
+A website's endpoing takes one of two almost identical forms,
+depending on the region:
+  bucket-name.s3-website-region.amazonaws.com
+  bucket-name.s3-website.region.amazonaws.com
+In my case it's these:
+      jefbrown.net.s3-website-us-east-1.amazonaws.com
+under.jefbrown.net.s3-website-us-east-1.amazonaws.com
+* PITFALL: my domain name is missing an f
