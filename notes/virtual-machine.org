@@ -14,6 +14,7 @@ The "instance state" column will soon show "running".
 * connect via SSH
 ssh -i <path to key> ec2-user@<public IP address>
 ** PITFALL: Might need to chmod 400 the ssh key first.
+** PITFALL: They suggest keeping the key in ~/.ssh/
 * end it from the browser
 specifically from the EC2 console at aws.org
 ** "stopping" the instance 
@@ -28,3 +29,5 @@ Even if it's done multiple times in an hour.
 Deletes all contents.
 Stops all charges.
 Is not instantaneous.
+** PITFALL: the SSH key becomes garbage
+once the instance is terminated

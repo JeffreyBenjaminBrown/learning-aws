@@ -1,8 +1,24 @@
 * refs | URLs
-** the lessons
- https://aws.amazon.com/getting-started/use-cases
-** S3 home
-https://console.aws.amazon.com/s3/home
+** all lessons
+https://aws.amazon.com/getting-started/use-cases
+** TODO ? next
+*** AWS services overview
+https://www.aws.training/Details/Video?id=16206&trk=gs_card
+*** Remotely run commands on an EC2 instance
+https://aws.amazon.com/getting-started/tutorials/remotely-run-commands-ec2-instance-systems-manager/?trk=gs_card
+*** Deploy a Python web app
+https://aws.amazon.com/getting-started/projects/deploy-python-application/?trk=gs_card
+*** Put a git repo on AWS
+https://aws.amazon.com/getting-started/projects/migrate-git-repository/?trk=gs_card
+*** Build a LAMP (linux, apache http, mysql, and a language) web app
+https://aws.amazon.com/getting-started/projects/launch-lamp-web-app/
+https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tutorial-launching-and-configuring-lamp
+*** Build a serverless app
+https://aws.amazon.com/getting-started/projects/build-serverless-web-app-lambda-apigateway-s3-dynamodb-cognito/?trk=gs_card
+*** Send messages between distributed apps
+https://aws.amazon.com/getting-started/tutorials/send-messages-distributed-applications/?trk=gs_card
+*** Fanout event notifications
+https://aws.amazon.com/getting-started/tutorials/send-fanout-event-notifications/?trk=gs_card
 * internet
 ** www.example.com is a subdomain of example.com
 * for saving money
@@ -21,9 +37,13 @@ with "S3 Select"
 *** use tags to track the cost of a bucket
   thttps://docs.aws.amazon.com/AmazonS3/latest/dev//CostAllocTagging.html
 ** S3 "Access Points"
-Are URLs.
+Have URLs.
 Are to control who can access what.
-* website endpoint formatting is weird
+* TODO AWS services I might want to learn
+** AWS storage gateway
+Someone describes it as a dropbox client but for S3.
+AWS seems to suggest it does lots of other stuff.
+* web endpoint formatting depends on region
 A website's endpoing takes one of two almost identical forms,
 depending on the region:
   bucket-name.s3-website-region.amazonaws.com
