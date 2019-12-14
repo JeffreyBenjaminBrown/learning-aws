@@ -1,4 +1,4 @@
-* URLs
+* refs | URLs
 ** the lessons
  https://aws.amazon.com/getting-started/use-cases
 ** S3 home
@@ -7,7 +7,6 @@ https://console.aws.amazon.com/s3/home
 ** www.example.com is a subdomain of example.com
 * for saving money
 ** "requester pays" is an S3 option
-
 * AWS lingo
 ** "Route 53" is a ("domain router"?)
 ** Simple Storage Service = S3 = buckets
