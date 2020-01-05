@@ -1,11 +1,11 @@
 * TODO refs | URLs
 ** all lessons
 https://aws.amazon.com/getting-started/use-cases
-** TODO ? next
+** PITFALL: don't visit
 *** AWS services overview
 https://www.aws.training/Details/Video?id=16206&trk=gs_card
-*** Put a git repo on AWS
-https://aws.amazon.com/getting-started/projects/migrate-git-repository/?trk=gs_card
+It's a slow video lecture series.
+** TODO ? next
 *** Deploy a Python web app
 https://aws.amazon.com/getting-started/projects/deploy-python-application/?trk=gs_card
 *** Build a LAMP (linux, apache http, mysql, and a language) web app
@@ -13,10 +13,12 @@ https://aws.amazon.com/getting-started/projects/launch-lamp-web-app/
 https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-tutorial-launching-and-configuring-lamp
 *** Build a serverless app
 https://aws.amazon.com/getting-started/projects/build-serverless-web-app-lambda-apigateway-s3-dynamodb-cognito/?trk=gs_card
-*** Send messages between distributed apps
-https://aws.amazon.com/getting-started/tutorials/send-messages-distributed-applications/?trk=gs_card
-*** Fanout event notifications
-https://aws.amazon.com/getting-started/tutorials/send-fanout-event-notifications/?trk=gs_card
+*** messaging
+There are even more tutorials on the same theme.
+**** Send messages between distributed apps
+ https://aws.amazon.com/getting-started/tutorials/send-messages-distributed-applications/?trk=gs_card
+**** Fanout event notifications
+ https://aws.amazon.com/getting-started/tutorials/send-fanout-event-notifications/?trk=gs_card
 * TODO use Emacs from an instance
 * internet
 ** www.example.com is a subdomain of example.com
