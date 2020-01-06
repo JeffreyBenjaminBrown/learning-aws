@@ -1,6 +1,6 @@
-docker run --name aws-py -it		\
-  -v /home/jeff/aws/ebdjango/:/mnt	\
-  -p 8000:8000 -d -h 127.0.0.1          \
+docker run --name aws-py -it			\
+  -v /home/jeff/aws/python-web-app/:/mnt	\
+  -p 8000:8000 -d -h 127.0.0.1			\
   jeffreybbrown/tax.co:2019-11-20.make.py
 
 docker exec -it aws-py bash

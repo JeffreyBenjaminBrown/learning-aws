@@ -12,7 +12,7 @@ So I'm just using Docker -- specifically tax.co.
 
 * install django in the container
 (Each time, unless/until I add it to the image.)
-  pip install django==2.1.1
+  pip install django==3.0.2
 * once, run `django-admin startproject ebdjango`
 This creates a new project, ala `stack new`.
 * from within the project, start the server, on *every* address
