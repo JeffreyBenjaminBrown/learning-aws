@@ -1,0 +1,4 @@
+* create a new project
+django-admin startproject <desired name of new project>
+* PITFALL: avoid some module names
+e.g. "django" or "test"
