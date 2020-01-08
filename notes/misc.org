@@ -1,3 +1,4 @@
+* TODO push new docker image
 * TODO refs | URLs
 ** all lessons
 https://aws.amazon.com/getting-started/use-cases

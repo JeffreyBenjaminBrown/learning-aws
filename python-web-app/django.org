@@ -1,4 +1,150 @@
-* create a new project
-django-admin startproject <desired name of new project>
-* PITFALL: avoid some module names
-e.g. "django" or "test"
+* tutorial TOC
+"Writing your first Django app"
+https://docs.djangoproject.com/en/3.0/intro/
+* TODO resume at
+part 3, top
+* part 1
+** filetree structure
+ Projects contain apps.
+ Apps "can live anywhere on your [Python path](https://docs.python.org/3/tutorial/modules.html#tut-searchpath)".
+** create a new project
+ django-admin startproject <desired name of new project>
+** PITFALL: avoid some module names
+ e.g. "django" or "test"
+** PITFALL: Django is for building a site, not serving it
+ The "Django development server" is useful for testing,
+ but they suggest using something like Apache in production.
+
+** run the devel server
+*** They suggest this
+   python manage.py runserver
+*** but from inside a Docker container, do this instead:
+   python manage.py runserver 0.0.0.0:8000
+ That broadcasts to the 8000 port on all addresses,
+ at least if the container was started (`docker run`) with the options
+     -p 8000:8000 -d -h 127.0.0.1
+** PITFALL: The devl server *usually* doesn't need restarting
+ but certain changes, like adding a file,
+ require a manual restart
+** create an app
+ from the folder containing manage.py:
+   python manage.py startapp <desired app name>
+** PITFALL: my filetree does't quite match the tutorial's
+ (I *think* this is right.)
+ They suggest a "mysite" folder,
+ and next to it, the "polls" (app) folder.
+ I'm doing that, but "mysite" is called "ebdjango".
+** create a view
+ see `index()`,
+ defined in `python-web-app/polls/views.py`
+** connect the view to the website
+*** model
+ see the "index" viewpattern in `polls/urls.py`,
+ and the "polls" urlpattern in `ebdjango/urls.py`.
+*** idea
+ Given a path, Django first searhes mysite/urls.py for a matching prefix.
+ If the second argument is an include() expression, as in
+     path('polls/', include('polls.urls'))
+ then Django will look in the indicated file, and *I'm guessing* recurse.
+ Eventually it should bottom out at an expression like
+     path('', views.index, name='index'),
+ at which point it visits the "name" function in the file that's the second arg.
+** "Patterns don’t search GET and POST parameters, or the domain name."
+ For example, in a request to https://www.example.com/myapp/, the URLconf will look for myapp/. In a request to https://www.example.com/myapp/?page=3, the URLconf will also look for myapp/.
+* part 2
+** mysite/settings.py
+uses SQLite by default.
+*** PITFALL: for production, switch to something heavier-duty
+like Postgresql
+*** choose TIME_ZONE from this list
+https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+*** it contains (among other things) a list of installed Django apps
+*** if any apps require a database, run "migrate" to (make the db?)
+python manage.py migrate
+** mysite/models.py
+*** idea
+Describes the structure of the database.
+Each "model" (e.g. Choice and Question in the example code)
+is, I guess, a table.
+*** a field's arguments depend on the subtype of Field chosen
+Some Field classes have required arguments.
+Each Field can be given an optional human-readable name as its first arg.
+*** ForeignKey associates items in one model with another
+e.g. this code
+  class Choice(models.Model):
+      question = models.ForeignKey(Question, on_delete=models.CASCADE)
+      ...
+says each Choice is associated with some Question
+** add the new app
+*** modify mysite/settings.py
+   INSTALLED_APPS = [
++    'polls.apps.PollsConfig', # the new app
+     'django.contrib.admin',
+     'django.contrib.auth',
+    ...
+** migrate the database
+*** run `python manage.py makemigrations polls`
+THis writes a "migration",
+a human-readable file that describes how the DB changed,
+to `polls/migrations/0001_initial.py`.
+*** if desired, check the migration
+View the SQL it translates into:
+  python manage.py sqlmigrate polls 0001
+Check for problems automatically:
+  python manage.py check
+*** execute the migration
+python manage.py migrate
+(the same command as before)
+** PITFALL: lots of magic: play with the API
+*** open a "Django shell"
+  python manage.py migrate
+It's a normal Python REPL, except
+"manage.py sets the DJANGO_SETTINGS_MODULE environment variable,
+which gives Django the Python import path to your mysite/settings.py file."
+*** from polls.models import Choice, Question
+*** Question.objects.all()    # It's empty.
+*** create a question
+from django.utils import timezone
+q = Question(question_text="What's new?", pub_date=timezone.now())
+q.save() # write `q` to the database
+*** modify the question
+q.question_text = "What's up?"
+q.save # This does not create a new question; it modifies the extant one.
+*** filter objects
+Question.objects.filter(question_text__startswith='What')
+Question.objects.filter(id=1)
+from django.utils import timezone
+current_year = timezone.now().year
+Question.objects.get(pub_date__year=current_year)
+  # PITFALL: __ here is used like it was (.)
+Question.objects.get(pk=1)
+  # works regardless what the primary key is called
+q = Question.objects.get(pk=1)
+*** test a user-defined method
+q . was_published_recently()
+*** PITFALL magic: sets of associated rows
+**** given a row, view associated rows from another table
+q.choice_set.create(choice_text='The usual', votes=0)
+q.choice_set.create(choice_text='Conquering the world', votes=0)
+q.choice_set.create(choice_text='So much winning', votes=0)
+**** fold such a set
+q.choice_set.count()
+*** PITFALL: magic: "field lookups"
+lots of automatically created names
+https://docs.djangoproject.com/en/3.0/topics/db/queries/#field-lookups-intro
+**** example
+Choice.objects.filter(question__pub_date__year=current_year)
+**** observation: double underscores really are like dot
+**** observation: class names can be used to query members of other classes
+*** delete everything in a set
+c = q.choice_set.filter(choice_text__startswith='Conquering')
+c.delete()
+** superuser
+*** create
+python manage.py createsuperuser
+*** visit admin site
+127.0.0.1:8000/admin
+*** make an app admin-modifiable
+use django.contrib.admin.site.register
+see sample code at polls/admin.py
+* part 3
