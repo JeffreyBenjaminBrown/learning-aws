@@ -148,3 +148,55 @@ python manage.py createsuperuser
 use django.contrib.admin.site.register
 see sample code at polls/admin.py
 * part 3
+** when Django matches a `urlpattern`, it calls `detail()`
+example: In polls/urls.py, there is this urlpattern:
+  path('<int:question_id>/', views.detail, name='detail')
+So if you visit `polls/34/`, it will call
+  detail(request=<HttpRequest object>, question_id=34)
+** using templates
+To separate the design (HTML) from the code (Python) for views.
+*** PITFALL: folders are confusing
+By default, DjangoTemplates looks for a `templates` folder in each installed app.
+Put the index template at `polls/templates/polls/index.html`.
+"You can refer to this template within Django as polls/index.html."
+*** rendering
+One can fetch the template explicitly or implicitly:
+
+  def index(request):
+    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    context = { 'latest_question_list': latest_question_list }
+
+    # fetch the template implicitly
+    return render(request, 'polls/index.html', context)
+
+    # equivalent: fetch and render from the template explicitly
+    template = loader.get_template('polls/index.html')
+    return HttpResponse(
+      template.render(context, request))
+*** get-or-404
+**** explicitdef detail(request, question_id):
+  try:
+    question = Question.objects.get( pk=question_id )
+  except Question.DoesNotExist:
+    raise Http404( "Question does not exist" )
+  return render( request,
+                 'polls/detail.html',
+                 {'question': question} )
+**** shorthand
+def detail(request, question_id):
+  question = get_object_or_404( Question, pk=question_id )
+  return render( request,
+                 'polls/detail.html',
+                 {'question': question} )
+*** relative links
+polls/index.html has a passage like this (minus the comment)
+    <ul>
+    {% for question in latest_question_list %}
+      <!--
+      This would work too, but absolute links are hard to refactor.
+      <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
+      The next line is better. It relies on the "detail" line in polls/urls.py.
+      -->
+      <li><a href="{% url 'detail' question.id %}">{{ question.question_text }}</a></li>
+    {% endfor %}
+    </ul>
