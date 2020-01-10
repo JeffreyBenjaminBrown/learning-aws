@@ -2,7 +2,7 @@
 "Writing your first Django app"
 https://docs.djangoproject.com/en/3.0/intro/
 * TODO resume at
-part 3, top
+part 4
 * part 1
 ** filetree structure
  Projects contain apps.
@@ -200,3 +200,4 @@ polls/index.html has a passage like this (minus the comment)
       <li><a href="{% url 'detail' question.id %}">{{ question.question_text }}</a></li>
     {% endfor %}
     </ul>
+* part 4

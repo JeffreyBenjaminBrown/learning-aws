@@ -1,7 +1,11 @@
 {% if latest_question_list %}
   <ul>
   {% for question in latest_question_list %}
-    <li><a href="{% url 'detail' question.id %}">{{ question.question_text }}</a></li>
+    <li>
+      <!-- the `polls` namespace is defined by `app_name` in polls/urls.py-->
+      <!-- the `detail` url is defined by `urlpatterns` in polls/urls.py-->
+      <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+    </li>
   {% endfor %}
   </ul>
 {% else %}
