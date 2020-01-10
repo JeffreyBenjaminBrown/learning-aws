@@ -2,7 +2,7 @@
 "Writing your first Django app"
 https://docs.djangoproject.com/en/3.0/intro/
 * TODO resume at
-part 4
+part 5, The Django test client
 * part 1
 ** filetree structure
  Projects contain apps.
