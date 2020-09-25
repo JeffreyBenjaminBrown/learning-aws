@@ -1,6 +1,6 @@
 docker run --name aws-py -it			\
-  -v /home/jeff/aws/python-web-app/:/mnt	\
+  -v /home/jeff/code/aws/python-web-app/:/mnt	\
   -p 8000:8000 -d -h 127.0.0.1			\
-  jeffreybbrown/tax.co:2020-01-05.django
+  ofiscal/tax.co:2020-06-26.pandas-1.05
 
 docker exec -it aws-py bash
