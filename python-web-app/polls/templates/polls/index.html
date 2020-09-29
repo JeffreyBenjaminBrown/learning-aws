@@ -2,9 +2,12 @@
   <ul>
   {% for question in latest_question_list %}
     <li>
-      <!-- the `polls` namespace is defined by `app_name` in polls/urls.py-->
-      <!-- the `detail` url is defined by `urlpatterns` in polls/urls.py-->
-      <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+      <!-- The `polls` namespace is defined by `app_name` in polls/urls.py-->
+      <!-- The `detail` url is defined by `urlpatterns` in polls/urls.py-->
+      <a href =
+        "{% url 'polls:detail' question.id %}">
+        <!-- 'href' = hyperlink. (PITFALL: This comment can't be placed immediately after the (=) in the href definition without screwing up how the text displays.) -->
+        {{ question.question_text }}</a>
     </li>
   {% endfor %}
   </ul>

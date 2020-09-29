@@ -1,39 +1,110 @@
-from django.http import HttpResponseRedirect
+from .models import Choice, Question
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+from django.template import loader
 from django.urls import reverse
 from django.views import generic
 
-from .models import Choice, Question
 
+####
+#### (Evolution of)
+#### the index
+####
 
-# The index, detail and results views are so simple that we can use
-# Django's "generic views" to define them.
-# The last view, "vote", is complicated, hence coded here "by hand".
+def index_1(request):
+    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    output = ', '.join([q.question_text for q in latest_question_list])
+    return HttpResponse(output)
+
+# This is better because it has a hyperlink, thanks to the template.
+def index_2(request):
+  return HttpResponse (
+    loader . get_template ( 'polls/index.html' )
+    . render (
+        { 'latest_question_list' : # this name is meaningful to the template
+          Question . objects . order_by ( '-pub_date' ) [:5] },
+        request ))
+
+# The last one's idiom is so common that there's shorthand for it.
+# This is equivalent to the last one.
+def index_3(request): return render(
+    request, # TODO: What's the point of this argument?
+    'polls/index.html',
+    { 'latest_question_list' :
+     ( Question.objects .
+      order_by( '-pub_date' )
+      [:5] ) } )
 
 class IndexView(generic.ListView):
   template_name = 'polls/index.html'
-  context_object_name = 'latest_question_list'
+  context_object_name = (
+      'latest_question_list' # this name is meaningful to the template
+      )
 
   def get_queryset(self):
     """Return the last five published questions."""
     return Question.objects.order_by('-pub_date')[:5]
 
+
+####
+#### (Evolution of)
+#### the detail view (of a vote)
+####
+
+def detail_1 (request, question_id):
+  return HttpResponse (
+    "This will eventually show question %s." % question_id )
+
+# This is better:
+# It actually shows the question, and its options.
+# It lets you vote
+#   (the template links the "vote" button to another page).
+# It gives a 404 error if the question_id isn't in the DB.
+def detail_2 ( request, question_id ) :
+  try:
+    question = Question . Objects . get ( pk = question_id )
+  except Question.DoesNotExist:
+    raise Http404 ( "Question does not exist" )
+  return render ( request,
+                  'polls/detail.html',
+                  {'question': question} )
+
+# That pattern, too, is so common that there's shorthand for it.
+# The following is equivalent to the preceding:
+def detail_3(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    # "There’s also a get_list_or_404() function, which works just as get_object_or_404 (), but it uses filter() instead of get(), so it can find lots of stuff. It raises Http404 if the list is empty.
+    return render ( request,
+                    'polls/detail.html',
+                    {'question' :  question} )
+
 class DetailView(generic.DetailView):
   model = Question
   template_name = 'polls/detail.html'
+
+
+####
+#### (Evolution of)
+#### the results view
+####
 
 class ResultsView(generic.DetailView):
   model = Question
   template_name = 'polls/results.html'
 
+
+####
+#### The vote() function -- which (TODO) is kind of like a view?
+####
+
 def vote(request, question_id):
-  question = get_object_or_404(Question, pk=question_id)
+  question = get_object_or_404(Question, pk = question_id)
   try: selected_choice = (
-    question.choice_set.get(
-      pk=request.POST['choice'] ) ) # returns the ID of the selected choice, as a string. request.POST values are always strings.
-  except (KeyError, Choice.DoesNotExist):
+    question . choice_set . get(
+      pk = request . POST['choice'] ) ) # returns the ID of the selected choice, as a string. request.POST values are always strings.
+  except (KeyError, Choice . DoesNotExist):
     # Redisplay the question voting form.
-    return render(request, 'polls/detail.html', {
+    return render ( request, 'polls/detail.html', {
       'question': question,
       'error_message': "You didn't select a choice.",
     })
