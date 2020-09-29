@@ -1,6 +1,6 @@
 docker run --name aws-py -it			\
   -v /home/jeff/code/aws/python-web-app/:/mnt	\
   -p 8000:8000 -d -h 127.0.0.1			\
-  ofiscal/tax.co:2020-06-26.pandas-1.05
+  ofiscal/tax.co:new
 
 docker exec -it aws-py bash
