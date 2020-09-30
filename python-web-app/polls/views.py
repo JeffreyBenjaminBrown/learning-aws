@@ -11,6 +11,8 @@ from django.views import generic
 #### the index
 ####
 
+indexTemplate = 'polls/index_n.html'
+
 def index_1(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
     output = ', '.join([q.question_text for q in latest_question_list])
@@ -19,7 +21,7 @@ def index_1(request):
 # This is better because it has a hyperlink, thanks to the template.
 def index_2(request):
   return HttpResponse (
-    loader . get_template ( 'polls/index.html' )
+    loader . get_template ( indexTemplate )
     . render (
         { 'latest_question_list' : # this name is meaningful to the template
           Question . objects . order_by ( '-pub_date' ) [:5] },
@@ -29,14 +31,14 @@ def index_2(request):
 # This is equivalent to the last one.
 def index_3(request): return render(
     request, # TODO: What's the point of this argument?
-    'polls/index.html',
+    indexTemplate,
     { 'latest_question_list' :
      ( Question.objects .
       order_by( '-pub_date' )
       [:5] ) } )
 
 class IndexView(generic.ListView):
-  template_name = 'polls/index.html'
+  template_name = indexTemplate
   context_object_name = (
       'latest_question_list' # this name is meaningful to the template
       )
@@ -50,6 +52,8 @@ class IndexView(generic.ListView):
 #### (Evolution of)
 #### the detail view (of a vote)
 ####
+
+detailTemplate = 'polls/detail_1.html'
 
 def detail_1 (request, question_id):
   return HttpResponse (
@@ -66,7 +70,7 @@ def detail_2 ( request, question_id ) :
   except Question.DoesNotExist:
     raise Http404 ( "Question does not exist" )
   return render ( request,
-                  'polls/detail.html',
+                  detailTemplate,
                   {'question': question} )
 
 # That pattern, too, is so common that there's shorthand for it.
@@ -75,12 +79,12 @@ def detail_3(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     # "There’s also a get_list_or_404() function, which works just as get_object_or_404 (), but it uses filter() instead of get(), so it can find lots of stuff. It raises Http404 if the list is empty.
     return render ( request,
-                    'polls/detail.html',
+                    detailTemplate,
                     {'question' :  question} )
 
 class DetailView(generic.DetailView):
   model = Question
-  template_name = 'polls/detail.html'
+  template_name = detailTemplate
 
 
 ####
