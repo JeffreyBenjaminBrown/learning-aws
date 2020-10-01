@@ -23,7 +23,10 @@ polls/vote/1, whereas it's supposed to be polls/1/vote, no?
          {% csrf_token %} template tag",
          to protect against "Cross Site Request Forgeries." -->
   {% for choice in question.choice_set.all %}
-    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+  <input type="radio"
+         name="chosen"
+         id="choice{{ forloop.counter }}"
+         value="{{ choice.id }}">
     <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
   {% endfor %}
   <input type="submit" value="Vote">

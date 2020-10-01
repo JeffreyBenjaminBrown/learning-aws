@@ -19,7 +19,7 @@ urlpatterns = [
 #       views.index_1,
 #       views.index_2,
 #       views.index_3,
-       views.IndexView.as_view(),
+        views.IndexView.as_view(),
 
         name='index'), # Optional. Useful for `URL reversing`:
         # https://docs.djangoproject.com/en/3.1/topics/http/urls/#naming-url-patterns
@@ -39,9 +39,25 @@ urlpatterns = [
 #        views.DetailView.as_view(),
 #        name='detail'),
 
+
+  ####
+  #### The (evolution of the page displaying)
+  #### results (of submitting a vote)
+  #### These correspond to a post-domain path like "/polls/5/".
+  ####
+
   # e.g. /polls/5/results/
-  path('<int:pk>/results/',       views.ResultsView.as_view(), name='results'),
+  # Pick one of these:
+  # path( '<int:pk>/results/', views.ResultsView.as_view(), name='results' ),
+  path( '<int:question_id>/results/', views.results_1, name='results'),
 
   # e.g. /polls/5/vote/
-  path('<int:question_id>/vote/', views.vote, name='vote'),
+  path( '<int:question_id>/vote/',
+        views.vote,
+        name='vote'),
+
+  # http://127.0.0.1:8000/polls/1/1/demonstrateReverse/1/
+  path( '<int:a>/<int:b>/demonstrateReverse/<int:c>/',
+        views.demonstrateReverse,
+        name='nameOfUrlToDemonstrateReverse'),
 ]
