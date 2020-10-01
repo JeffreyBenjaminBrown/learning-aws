@@ -11,7 +11,7 @@ from django.views import generic
 #### the index
 ####
 
-indexTemplate = 'polls/index_n.html'
+indexTemplate = 'polls/index_2.html'
 # PITFALL: There is no correspondence between the numbers `x` in the functions
 # `index_x` defined below and the numbers x in `polls/index_x.html` above.
 # Also, IndexView below is another alternative to the index_x functions.

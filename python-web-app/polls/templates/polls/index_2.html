@@ -5,7 +5,12 @@ used by the href tag is relative. -->
   <ul>
     {% for question in latest_question_list %}
     <li>
-      <a href="{% url 'polls:detail' question.id %}">
+      <a href =
+         "{% url 'polls:detail' question.id %}">
+        <!-- `polls` is, I suspect, looked up in <project-name>/urls.py,
+              but it could conceivably come from polls.urls.app_name. -->
+        <!-- `detail` is looked up in `urlpatterns` in polls/urls.py-->
+        <!-- 'href' means "hyperlink". -->
         {{ question.question_text }}
       </a>
     </li>
