@@ -1,8 +1,9 @@
-from .models import Choice, Question
+from polls.models import Choice, Question
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.template import loader
 from django.urls import reverse
+from django.utils import timezone
 from django.views import generic
 
 
@@ -44,19 +45,29 @@ def index_3(request): return render(
       [:5] ) } )
 
 class IndexView(generic.ListView):
+  # Optional. Defaults to '<app name>/<model name>_list.html'
   template_name = indexTemplate
+
+  # Optional. Defaults to 'question_list'.
+  # TODO: For that default, does django infer 'question'
+  # from the 'get_queryset()' field below?
   context_object_name = (
       'latest_question_list' # this name is meaningful to the template
       )
 
   def get_queryset(self):
     """Return the last five published questions."""
-    return Question.objects.order_by('-pub_date')[:5]
+    return (
+      Question . objects . filter (
+          # pub_date__lte (less than or equal) is automatically created
+          # by Django for the Question class.
+          pub_date__lte = timezone . now () ) .
+      order_by ( '-pub_date')
+      [:5] )
 
 
 ####
-#### (Evolution of)
-#### the detail view (of a vote)
+#### Detail view of a vote, inc. the opportunity to vote
 ####
 
 detailTemplate = 'polls/detail_2.html'
@@ -85,20 +96,44 @@ def detail_2 ( request, question_id ) :
 # That pattern, too, is so common that there's shorthand for it.
 # The following is equivalent to the preceding:
 def detail_3(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
+    question = get_object_or_404 ( Question,
+                                   pk = question_id )
     # "There’s also a get_list_or_404() function, which works just as get_object_or_404 (), but it uses filter() instead of get(), so it can find lots of stuff. It raises Http404 if the list is empty.
     return render ( request,
                     detailTemplate,
                     {'question' :  question} )
 
-class DetailView(generic.DetailView):
-  model = Question
-  template_name = detailTemplate
+# Just like detail_3, but more concise.
+class DetailView_1(generic.DetailView):
+  # A generic.DetailView details a single object.
+  # It "expects the primary key value captured from the URL to be called" pk.
+
+  # TODO: Functions like detail_3 send a dictionary with a "question" key,
+  # which then substitutes content into the template.
+  # But this defines no such key. Does it always simply lowercase
+  # the class name? If so, what about interior capitals?
+
+  model = Question # Defines the type of thing the view details.
+
+  template_name = detailTemplate # This is optional.
+  # By default, the DetailView generic view uses a template called
+  # <app name>/<model name>_detail.html.
+
+# Equal to DetailView_1, except with an overridden method.
+class DetailView_2( DetailView_1 ):
+
+  def get_object(self): # override to prohibit fetching from the future
+    # PITFALL: Altering the context (not done here) can get hairy:
+    # "Generally, get_context_data will merge the context data of all parent classes with those of the current class. To preserve this behavior in your own classes where you want to alter the context, you should be sure to call get_context_data on the super class."
+    # https://docs.djangoproject.com/en/3.1/topics/class-based-views/generic-display/
+    obj = super().get_object()
+    if obj . pub_date >= timezone . now():
+      raise Http404 ( "Question not yet available." )
+    return obj
 
 
 ####
-#### (Evolution of)
-#### the results view
+#### Results of a vote
 ####
 
 resultsTemplate = 'polls/results_1.html'

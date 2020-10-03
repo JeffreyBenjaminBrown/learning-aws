@@ -23,7 +23,7 @@ class Question(models.Model):
     return self.question_text
   def was_published_recently( self):
     t = timezone.now()
-    return ( t - datetime.timedelta(days=2)
+    return ( t - datetime.timedelta( days = 365)
              <= self.pub_date
              <= t )
 

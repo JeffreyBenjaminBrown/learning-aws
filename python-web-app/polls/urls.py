@@ -35,11 +35,11 @@ urlpatterns = [
   # Pick one of these
 #  path('<int:question_id>/', views.detail_1, name='detail'),
 #  path('<int:question_id>/', views.detail_2, name='detail'),
-   path('<int:question_id>/', views.detail_3, name='detail'),
-#  path('<int:pk>/', # Matches an integer, uses it as the primary key
-#                    # with which to lookup a question.
-#        views.DetailView.as_view(),
-#        name='detail'),
+#  path('<int:question_id>/', views.detail_3, name='detail'),
+  path( '<int:pk>/', # Matches an integer, uses it as the primary key
+                     # with which to lookup a question.
+        views.DetailView_2.as_view(),
+        name='detail'),
 
 
   ####
@@ -49,8 +49,8 @@ urlpatterns = [
   # These correspond to a post-domain path like "/polls/5/".
 
   # Pick one of these:
-  path( '<int:question_id>/results/', views.results_1, name='results'),
-  # path( '<int:pk>/results/', views.ResultsView.as_view(), name='results' ),
+  # path( '<int:question_id>/results/', views.results_1, name='results'),
+  path( '<int:pk>/results/', views.ResultsView.as_view(), name='results' ),
 
 
   ####
