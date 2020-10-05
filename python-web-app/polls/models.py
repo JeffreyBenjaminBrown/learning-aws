@@ -1,7 +1,7 @@
 import datetime
 
-from django.db import models
-from django.utils import timezone
+from django . db import models
+from django . utils import timezone
 
 
 # Each model roughly corresponds to a DB table.
