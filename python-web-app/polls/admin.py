@@ -38,6 +38,11 @@ class QuestionAdmin_2 ( admin . ModelAdmin ):
                     # (By default, fields are shown as the field name,
                     # in caps, with '_' replaced by ' '.
         'was_published_recently' )
+    list_filter = ['pub_date']
+      # Django automatically creates options like "last 7 days".
+    search_fields = ['question_text']
+      # Text-based search. Strict matching, not regex.
+      # Whitespace defines tokens. Order of tokens is ignored.
 
     # What to show while user creates|edits a question.
     fieldsets = [

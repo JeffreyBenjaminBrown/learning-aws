@@ -7,7 +7,6 @@ app_name = 'polls'
 
 urlpatterns = [
 
-
   ####
   #### The index
   ####
