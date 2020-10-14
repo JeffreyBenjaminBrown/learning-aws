@@ -3,4 +3,5 @@ docker run --name aws-py -it			\
   -p 8000:8000 -d -h 127.0.0.1			\
   ofiscal/tax.co:new
 
-docker exec -it aws-py bash
+# Start it as root; otherwise Apache won't run.
+docker exec -it -u 0 aws-py bash
