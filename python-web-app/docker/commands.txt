@@ -1,7 +1,16 @@
+### Start and enter Docker container
+###
+
 docker run --name aws-py -it			\
   -v /home/jeff/code/aws/python-web-app/:/mnt	\
   -p 8000:8000 -d -h 127.0.0.1			\
   ofiscal/tax.co:new
 
-# Start it as root; otherwise Apache won't run.
-docker exec -it -u 0 aws-py bash
+docker exec -it aws-py bash
+
+
+### In Docker container, run apache
+###
+
+cd /etc/apache2
+bash start-apache.sh
