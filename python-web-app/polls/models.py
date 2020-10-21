@@ -16,7 +16,7 @@ class Question(models.Model):
   question_text = models . CharField ( max_length = 200 )
     # To see all fields built into Django (custom ones are possible too):
     # https://docs.djangoproject.com/en/3.0/ref/models/fields/#model-field-types
-/  pub_date = models . DateTimeField (
+  pub_date = models . DateTimeField (
       # All fields accept an optional human-readable name like this,
       # usually as the first argument.
       'date published' )
