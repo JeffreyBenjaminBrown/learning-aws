@@ -45,7 +45,8 @@ def index_3(request): return render(
       [:5] ) } )
 
 class IndexView(generic.ListView):
-  # Optional. Defaults to '<app name>/<model name>_list.html'
+  # Optional. Defaults to '<app name>/<model name>_list.html'.
+  # I suspect `template_file` would be a better name than `template_name`.
   template_name = indexTemplate
 
   # Optional. Defaults to 'question_list'.
@@ -184,7 +185,7 @@ def vote ( request, question_id ) :
     # with POST data. This prevents data from being posted twice if a
     # user hits the Back button. (This advice is not Django-specific.)
     reverse( # TODO: PITFALL: reverse() is confusing. To understand it,
-             # try visiting polls.nameOfUrlToDemonstrateReverse,
+             # try visiting polls . nameOfUrlToDemonstrateReverse,
              # which calls demonstrateReverse() (defined below).
              # I see no reversal in it; you give it a list of arguments
              # in the order they appear in the URL.
