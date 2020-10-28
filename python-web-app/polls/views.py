@@ -38,7 +38,8 @@ def index_2(request):
 
 # The last one's idiom is so common that there's shorthand for it.
 # This is equivalent to the last one.
-def index_3(request): return render(
+def index_3 ( request ):
+  return render(
     request, # TODO: What's the point of this argument?
     indexTemplate,
     { 'latest_question_list' :
@@ -46,7 +47,7 @@ def index_3(request): return render(
       order_by (  '-pub_date' )
       [:5] ) } )
 
-class IndexView(generic.ListView):
+class IndexView ( generic . ListView ):
   # Optional. Defaults to '<app name>/<model name>_list.html'.
   # I suspect `template_file` would be a better name than `template_name`.
   template_name = indexTemplate
@@ -58,7 +59,7 @@ class IndexView(generic.ListView):
       'latest_question_list' # this name is meaningful to the template
       )
 
-  def get_queryset(self):
+  def get_queryset ( self ):
     """Return the last five published questions."""
     return (
       Question . objects . filter (
@@ -107,7 +108,7 @@ def detail_3(request, question_id):
                     {'question' :  question} )
 
 # Just like detail_3, but more concise.
-class DetailView_1(generic.DetailView):
+class DetailView_1 ( generic . DetailView ):
   # A generic.DetailView details a single object.
   # It "expects the primary key value captured from the URL to be called" pk.
 
@@ -125,7 +126,7 @@ class DetailView_1(generic.DetailView):
 # Equal to DetailView_1, except with an overridden method.
 class DetailView_2( DetailView_1 ):
 
-  def get_object(self): # override to prohibit fetching from the future
+  def get_object ( self ) : # override to prohibit fetching from the future
     # PITFALL: Altering the context (not done here) can get hairy:
     # "Generally, get_context_data will merge the context data of all parent classes with those of the current class. To preserve this behavior in your own classes where you want to alter the context, you should be sure to call get_context_data on the super class."
     # https://docs.djangoproject.com/en/3.1/topics/class-based-views/generic-display/
@@ -133,24 +134,6 @@ class DetailView_2( DetailView_1 ):
     if obj . pub_date >= timezone . now():
       raise Http404 ( "Question not yet available." )
     return obj
-
-
-####
-#### Results of a vote
-####
-
-resultsTemplate = 'polls/results_1.html'
-# PITFALL: There is no correspondence between the numbers `x` in the functions
-# `results_x` defined below and the numbers x in `polls/results_x.html` above.
-# Also, ResultsView below is another alternative to the results_x functions.
-
-def results_1(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, resultsTemplate, {'question': question})
-
-class ResultsView(generic.DetailView):
-  model = Question
-  template_name = resultsTemplate
 
 
 ####
@@ -193,6 +176,27 @@ def vote ( request, question_id ) :
              # in the order they appear in the URL.
         'polls:results',
         args = [ question . id ] ) )
+
+
+####
+#### Results of a vote
+####
+
+resultsTemplate = 'polls/results_1.html'
+# PITFALL: There is no correspondence between the numbers `x` in the functions
+# `results_x` defined below and the numbers x in `polls/results_x.html` above.
+# Also, ResultsView below is another alternative to the results_x functions.
+
+def results_1(request, question_id):
+    question = get_object_or_404 ( Question,
+                                   pk = question_id )
+    return render ( request,
+                    resultsTemplate,
+                    { 'question' :  question } )
+
+class ResultsView(generic.DetailView):
+  model = Question
+  template_name = resultsTemplate
 
 
 ####
