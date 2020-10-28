@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
+from .forms import UploadFileForm
+
 
 ####
 #### (Evolution of)
@@ -210,3 +212,76 @@ def demonstrateReverse (request, a, b, c):
                args = # Strangely, a dictionary like {"a":1,...} fails.
                  [a,b,c] )
     ] ) )
+
+
+####
+#### An upload form
+####
+
+# So far drawn entirely from
+#   https://docs.djangoproject.com/en/3.1/topics/http/file-uploads/
+
+def handle_uploaded_file ( f ) :
+  with open ( 'testing-upload.txt', 'wb+' ) as destination:
+    for chunk in f . chunks ():
+      # "Looping over UploadedFile.chunks() instead of using read()
+      # ensures that large files don’t overwhelm your system’s memory."
+      destination . write ( chunk )
+
+def upload_file_1 ( request ) :
+  # If all we want to do is save the file, upload_file_2 is simpler,
+  # because it does not require `handle_uploaded_file` function.
+  if request . method == 'POST':
+    form = UploadFileForm ( request . POST,
+                            request . FILES )
+    if form . is_valid() :
+      handle_uploaded_file ( request . FILES [ 'file' ] )
+      return HttpResponseRedirect ( '/success/url/' )
+  else:
+    form = UploadFileForm()
+  return render ( request,
+                  'upload.html',
+                  { 'form' :  form } )
+
+def upload_file_2(request):
+    pass
+  # To do this, I would have to be
+  # "saving a file on a Model with a FileField",
+  # in particular, defining `.forms.ModelFormWithFileField`
+  # before using it below.
+  #
+  # if request . method == 'POST':
+  #   form = ModelFormWithFileField ( request . POST,
+  #                                   request . FILES )
+  #   if form . is_valid ():
+  #       form . save() # saves the file
+  #       return HttpResponseRedirect ( '/success/url/' )
+  # else:
+  #     form = ModelFormWithFileField ()
+  # return render ( request,
+  #                 'upload.html',
+  #                 { 'form' :  form } )
+
+def upload_file_2(request):
+    pass
+  # I did not understand the following passage from
+  #   https://docs.djangoproject.com/en/3.1/topics/http/file-uploads/
+  #
+  # If you are constructing an object manually, you can assign the file object from
+  # request.FILES to the file field in the model:
+  #
+  # from django.http import HttpResponseRedirect
+  # from django.shortcuts import render
+  # from .forms import UploadFileForm
+  # from .models import ModelWithFileField
+  #
+  # def upload_file(request):
+  #     if request.method == 'POST':
+  #         form = UploadFileForm(request.POST, request.FILES)
+  #         if form.is_valid():
+  #             instance = ModelWithFileField(file_field=request.FILES['file'])
+  #             instance.save()
+  #             return HttpResponseRedirect('/success/url/')
+  #     else:
+  #         form = UploadFileForm()
+  #     return render(request, 'upload.html', {'form': form})
