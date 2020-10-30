@@ -74,7 +74,7 @@ class IndexView ( generic . ListView ):
 #### Detail view of a vote, inc. the opportunity to vote
 ####
 
-detailTemplate = 'polls/detail_2.html'
+detailTemplate = 'polls/detail_3.html'
 # PITFALL: There is no correspondence between the numbers `x` in the functions
 # `detail_x` defined below and the numbers x in `polls/detail_x.html` above.
 # Also, DetailView below is another alternative to the detail_x functions.
@@ -151,7 +151,7 @@ def vote ( request, question_id ) :
                                  pk = question_id )
   try: selected_choice = (
     question . choice_set . get(
-      pk = request . POST['chosen'] ) ) # returns the ID of the selected choice, as a string. request.POST values are always strings.
+      pk = request . POST [ 'chosen' ] ) ) # returns the ID of the selected choice, as a string. request.POST values are always strings.
       # GET objects are similar, but that's not what vote() receives.
   except ( KeyError,             # If the POST[] lookup fails.
            Choice . DoesNotExist # If, I think, the get() lookup fails.
@@ -175,7 +175,7 @@ def vote ( request, question_id ) :
              # I see no reversal in it; you give it a list of arguments
              # in the order they appear in the URL.
         'polls:results',
-        args = [ question . id ] ) )
+        kwargs = { "pk" : question . id } ) )
 
 
 ####
@@ -187,7 +187,7 @@ resultsTemplate = 'polls/results_1.html'
 # `results_x` defined below and the numbers x in `polls/results_x.html` above.
 # Also, ResultsView below is another alternative to the results_x functions.
 
-def results_1(request, question_id):
+def results_1 ( request, question_id ) :
     question = get_object_or_404 ( Question,
                                    pk = question_id )
     return render ( request,
@@ -209,13 +209,41 @@ def demonstrateReverse (request, a, b, c):
     '\n'.join( [
       "If the arguments were 1,2 and 3: ",
       reverse( 'polls:nameOfUrlToDemonstrateReverse',
-               args = # Strangely, a dictionary like {"a":1,...} fails.
-                 [1,2,3] ),
+               # PITFALL: safer than 'args' below, which uses a list,
+               # would be to use 'kwargs', which takes a dict.
+               # But I'm illustrating that reversal does not reverse,
+               # so here I'm sticking with 'args'.
+               args = [1,2,3] ),
       "If the arguments were those in the URL that brought you here:",
       reverse( 'polls:nameOfUrlToDemonstrateReverse',
-               args = # Strangely, a dictionary like {"a":1,...} fails.
-                 [a,b,c] )
+               args = [a,b,c] )
     ] ) )
+
+
+####
+#### A silly form
+####
+
+# Here I'm trying to make a view to use the template code suggested at
+#   https://docs.djangoproject.com/en/3.1/topics/forms/
+
+def silly_form ( request ) :
+    return render (
+        request,
+        "polls/silly-form.html",
+        { 'default_name' : "Bob Hope" } )
+
+def silly_form_process ( request ):
+  your_name = request . POST [ 'your_name' ]
+  return HttpResponseRedirect (
+    reverse( 'polls:silly-form-result',
+             kwargs = { "name_augmented" : "Mr. " + your_name } ) )
+
+def silly_form_result ( request, name_augmented ):
+  return render (
+      request,
+      "polls/silly-form-result.html",
+      { 'name_augmented' : name_augmented } )
 
 
 ####
@@ -225,7 +253,7 @@ def demonstrateReverse (request, a, b, c):
 # So far drawn entirely from
 #   https://docs.djangoproject.com/en/3.1/topics/http/file-uploads/
 
-def handle_uploaded_file ( f ) :
+def handle_uploaded_file ( f ):
   with open ( 'testing-upload.txt', 'wb+' ) as destination:
     for chunk in f . chunks ():
       # "Looping over UploadedFile.chunks() instead of using read()

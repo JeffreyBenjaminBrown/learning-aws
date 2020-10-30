@@ -2,5 +2,6 @@ images
 *~
 .emacs.desktop*
 secret/
+*.pyc
 git-comment
 __pycache__/

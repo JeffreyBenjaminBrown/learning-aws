@@ -80,4 +80,33 @@ urlpatterns = [
   path( '<int:a>/<int:b>/demonstrateReverse/<int:c>/',
         views.demonstrateReverse,
         name='nameOfUrlToDemonstrateReverse'),
+
+
+  ####
+  #### A minimal example of form submission and redirection.
+  ####
+
+  # The user visits 'silly-form', which sends their data (their name) to
+  # 'silly-form-process', which changes it (appends "Mr ") and sends it to
+  # 'silly-form-result'. Although 'silly-form-process' is a URL,
+  # it never displays a page to the user;
+  # they are taken straight from the first to the last.
+
+  # Each URL lookup goes through this code,
+  # which looks through polls.views for a function.
+  # Each function calling "render" uses a template in polls/templates/polls.
+  # The URL in the middle, 'silly-form-process', renders nothing
+  # and therefore uses no template.
+
+  path( 'silly-form/',
+        views.silly_form,
+        name='silly-form' ),
+
+  path( 'silly-form-process/',
+        views.silly_form_process,
+        name='silly-form-process' ),
+
+  path( 'silly-form-result/<name_augmented>/',
+        views.silly_form_result,
+        name='silly-form-result' ),
 ]
