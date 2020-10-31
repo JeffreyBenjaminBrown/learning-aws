@@ -102,6 +102,10 @@ urlpatterns = [
         views.silly_form,
         name='silly-form' ),
 
+  path( 'silly-form-2/',
+        views.silly_form_2,
+        name='silly-form-2' ),
+
   path( 'silly-form-process/',
         views.silly_form_process,
         name='silly-form-process' ),

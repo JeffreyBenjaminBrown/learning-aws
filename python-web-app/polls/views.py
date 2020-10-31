@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
-from .forms import UploadFileForm
+from .forms import UploadFileForm, NameForm
 
 
 ####
@@ -234,6 +234,8 @@ def silly_form ( request ) :
         { 'default_name' : "Bob Hope" } )
 
 def silly_form_process ( request ):
+  # Modifies the data (appending "Mr. " to the name)
+  # and passes it to a new URL, without rendering any HTML.
   your_name = request . POST [ 'your_name' ]
   return HttpResponseRedirect (
     reverse( 'polls:silly-form-result',
@@ -244,6 +246,42 @@ def silly_form_result ( request, name_augmented ):
       request,
       "polls/silly-form-result.html",
       { 'name_augmented' : name_augmented } )
+
+# Uses a Django Form to reduce template boilerplate.
+def silly_form_2 ( request ):
+  # Docs that suggest this code:
+  #   https://docs.djangoproject.com/en/3.1/topics/forms/
+
+  # If this is a POST request we need to process the form data.
+  if request . method == 'POST':
+      # Create a form instance and populate it with data from the request.
+      # This is called "binding the data to the form",
+      # after which the form is "bound":
+      form = NameForm ( request . POST )
+      # Check whether it's valid:
+      if form . is_valid ():
+          # Process The Data in `form . cleaned_data` as required:
+          # ...
+          # (You can still access the unvalidated data directly from
+          # request.POST at this point, but the validated data is better.)
+
+          # Redirect to a new URL:
+          return HttpResponseRedirect (
+              reverse(
+                  'polls:silly-form-result',
+                  kwargs = { "name_augmented" :
+                             "Mr. " + form . cleaned_data . your_name } ) )
+
+  # If a GET (or any other method) we'll create a blank form.
+  else:
+      form = NameForm()
+
+  # TODO ? This is the alternative to the HttpResponseRedirect above?
+  # Is it meant to redisplay this same page,
+  # because the user's data was bad?
+  return render ( request,
+                  'silly-form-2.html',
+                  { 'form' :  form } )
 
 
 ####
