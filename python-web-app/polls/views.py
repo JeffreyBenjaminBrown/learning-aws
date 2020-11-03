@@ -270,7 +270,7 @@ def silly_form_2 ( request ):
               reverse(
                   'polls:silly-form-result',
                   kwargs = { "name_augmented" :
-                             "Mr. " + form . cleaned_data . your_name } ) )
+                             "Mr. " + form . cleaned_data [ your_name ] } ) )
 
   # If a GET (or any other method) we'll create a blank form.
   else:
