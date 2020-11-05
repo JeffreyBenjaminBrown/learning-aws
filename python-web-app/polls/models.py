@@ -12,7 +12,7 @@ from django . utils import timezone
 # Primary key fields are automatically generated, as integers,
   # but this can be overridden.
 
-class Question(models.Model):
+class Question ( models . Model ):
   question_text = models . CharField ( max_length = 200 )
     # To see all fields built into Django (custom ones are possible too):
     # https://docs.djangoproject.com/en/3.0/ref/models/fields/#model-field-types
@@ -39,7 +39,7 @@ class Question(models.Model):
     # It's like the optional argument to DateTimeField above,
     # which cannot be used for function definitions.
 
-class Choice( models.Model):
+class Choice( models . Model ):
   question = ( # refers to another table
       models . ForeignKey( Question,
                           on_delete = models . CASCADE ) )

@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from .secret import EMAIL_HOST
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...).
 BASE_DIR = os.path.dirname( os.path.dirname( os.path.abspath( __file__)))
@@ -22,7 +24,7 @@ BASE_DIR = os.path.dirname( os.path.dirname( os.path.abspath( __file__)))
 SECRET_KEY = 'kwf)oxf8oe)0%1ytgm^!r4br1253%uyxn43$q0#q17&^ln^nai'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['.localhost', '127.0.0.1']
 
@@ -31,6 +33,7 @@ ALLOWED_HOSTS = ['.localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
   'polls.apps.PollsConfig',
+  'run_make.apps.RunMakeConfig',
   'django.contrib.admin',
   'django.contrib.auth',
   'django.contrib.contenttypes',

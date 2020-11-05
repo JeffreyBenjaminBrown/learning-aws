@@ -28,7 +28,7 @@ def index_1(request):
     return HttpResponse ( output )
 
 # This is better because it has a hyperlink, thanks to the template.
-def index_2(request):
+def index_2 ( request ) :
   return HttpResponse (
     loader . get_template ( indexTemplate )
     . render (
@@ -39,7 +39,7 @@ def index_2(request):
 # The last one's idiom is so common that there's shorthand for it.
 # This is equivalent to the last one.
 def index_3 ( request ):
-  return render(
+  return render (
     request, # TODO: What's the point of this argument?
     indexTemplate,
     { 'latest_question_list' :
@@ -224,7 +224,7 @@ def demonstrateReverse (request, a, b, c):
 #### A silly form
 ####
 
-# Here I'm trying to make a view to use the template code suggested at
+# A view (by me) that uses the template code suggested at
 #   https://docs.djangoproject.com/en/3.1/topics/forms/
 
 def silly_form ( request ) :
@@ -238,8 +238,8 @@ def silly_form_process ( request ):
   # and passes it to a new URL, without rendering any HTML.
   your_name = request . POST [ 'your_name' ]
   return HttpResponseRedirect (
-    reverse( 'polls:silly-form-result',
-             kwargs = { "name_augmented" : "Mr. " + your_name } ) )
+    reverse ( 'polls:silly-form-result',
+              kwargs = { "name_augmented" : "Mr. " + your_name } ) )
 
 def silly_form_result ( request, name_augmented ):
   return render (
@@ -267,20 +267,21 @@ def silly_form_2 ( request ):
 
           # Redirect to a new URL:
           return HttpResponseRedirect (
-              reverse(
+              reverse (
                   'polls:silly-form-result',
                   kwargs = { "name_augmented" :
-                             "Mr. " + form . cleaned_data [ your_name ] } ) )
+                             "Mr. " + form . cleaned_data [ your_name ]
+                             } ) )
 
   # If a GET (or any other method) we'll create a blank form.
   else:
-      form = NameForm()
+    form = NameForm()
 
   # TODO ? This is the alternative to the HttpResponseRedirect above?
   # Is it meant to redisplay this same page,
   # because the user's data was bad?
   return render ( request,
-                  'silly-form-2.html',
+                  'polls/silly-form-2.html',
                   { 'form' :  form } )
 
 
