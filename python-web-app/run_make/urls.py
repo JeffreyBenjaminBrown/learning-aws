@@ -9,4 +9,12 @@ urlpatterns = [
     path( '',
           views.index,
           name='index'),
+
+    path( 'ingest-spec',
+          views.ingest_spec,
+          name='ingest-spec'),
+
+    path( 'thank-for-spec/<email>',
+          views.thank_for_spec,
+          name='thank-for-spec'),
 ]
