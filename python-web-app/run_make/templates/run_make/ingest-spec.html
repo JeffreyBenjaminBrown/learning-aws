@@ -1,7 +1,11 @@
+<!-- PITFALL: COnfusingly, when the form below is submitted,
+it is handed (per the form's "action =" option)
+back to the same URL where it was generated.
+That's because that URL treats gets and posts differently.
+See ingest_spec in views.py for details. -->
 <form action = "{% url 'run_make:ingest-spec'%}"
       method = "post">
   {% csrf_token %}
-  <!-- {{ form.as_table }} -->
   {% for field in form %}
     <div class="fieldWrapper">
       {{ field.errors }}

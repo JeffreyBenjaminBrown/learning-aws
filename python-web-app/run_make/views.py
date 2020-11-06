@@ -1,4 +1,6 @@
+import json
 import os
+import subprocess
 from datetime import datetime # for datetime.datetime.now
 
 from django.http import HttpResponseRedirect
@@ -30,6 +32,10 @@ def ingest_spec ( request ):
   if request . method == 'POST':
     form = TaxConfigForm ( request . POST )
     if form . is_valid ():
+      with open('input.json', 'w') as f:
+        json.dump( form . cleaned_data,
+                   f )
+      subprocess . run ( ["make", "output.json"] )
       return HttpResponseRedirect (
         reverse (
           'run_make:thank-for-spec',
