@@ -12,5 +12,9 @@ docker exec -it aws-py bash
 ### In Docker container, run apache
 ###
 
+# either this
+service apache2 start
+
+# or this
 cd /etc/apache2
 bash start-apache.sh
