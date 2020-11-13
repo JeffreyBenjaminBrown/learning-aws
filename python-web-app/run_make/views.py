@@ -32,10 +32,11 @@ def ingest_spec ( request ):
   if request . method == 'POST':
     form = TaxConfigForm ( request . POST )
     if form . is_valid ():
+      os . chdir ( "/mnt/web/run_make/fake_make" )
       with open('input.json', 'w') as f:
         json.dump( form . cleaned_data,
                    f )
-      subprocess . run ( ["make", "output.json"] )
+      subprocess . run ( [ "make", "output.json" ] )
       return HttpResponseRedirect (
         reverse (
           'run_make:thank-for-spec',

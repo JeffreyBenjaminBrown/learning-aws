@@ -6,4 +6,5 @@ migrations
 *.pyc
 git-comment
 __pycache__/
-
+db.sqlite3
+run_make/fake_make/*.json
