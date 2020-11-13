@@ -1,0 +1,68 @@
+
+manage.py,16
+def main(7,107
+
+polls/apps.py,24
+class PollsConfig(4,36
+
+polls/admin.py,26
+class QuestionAdmin(5,72
+
+polls/views.py,369
+def index_1(20,612
+def index_2(29,985
+def index_3(39,1357
+class IndexView(47,1578
+  def get_queryset(58,1957
+def detail_1 78,2634
+def detail_2 87,2964
+def detail_3(98,3370
+class DetailView_1(107,3861
+class DetailView_2(123,4570
+  def get_object(125,4607
+def results_1(144,5554
+class ResultsView(148,5719
+def vote 163,6141
+def demonstrateReverse 200,7659
+
+polls/tests.py,477
+class QuestionModelTests 12,227
+  def test_was_published_recently_with_old_question 15,316
+def create_Question(37,981
+class QuestionIndexViewTests(52,1515
+    def test_no_questions(53,1555
+    def test_past_question(62,1940
+    def test_future_question(74,2352
+    def test_future_question_and_past_question(86,2800
+    def test_two_past_questions(99,3309
+class QuestionDetailViewTests(112,3822
+  def test_future_question(113,3863
+  def test_past_question(126,4306
+
+polls/models.py,127
+class Question(15,414
+  def __str__(22,798
+  def was_published_recently(24,850
+class Choice(30,1010
+  def __str__(36,1262
+
+polls/migrations/0001_initial.py,23
+class Migration(7,125
+
+ebdjango/__init__.py,0
+
+ebdjango/asgi.py,0
+
+ebdjango/urls.py,0
+
+ebdjango/settings.py,0
+
+ebdjango/wsgi.py,0
+
+polls/migrations/__init__.py,0
+
+polls/__init__.py,0
+
+polls/temp.py,0
+
+polls/urls.py,0
