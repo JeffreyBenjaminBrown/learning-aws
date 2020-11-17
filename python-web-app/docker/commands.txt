@@ -9,7 +9,7 @@ docker run --name aws-py -it                      \
   ofiscal/tax.co:latest
 
 docker exec -it aws-py bash
-
+docker stop aws-py && docker rm aws-py
 
 ### In Docker container, configure and run apache
 ###
