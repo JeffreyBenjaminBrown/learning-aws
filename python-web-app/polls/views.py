@@ -227,7 +227,8 @@ def demonstrateReverse (request, a, b, c):
 def embed_pictures ( request ) :
   return render (
     request,
-    "polls/embed-pictures.html" )
+    "polls/embed-pictures.html",
+    { "folder" : "user-12" } )
 
 
 ####
