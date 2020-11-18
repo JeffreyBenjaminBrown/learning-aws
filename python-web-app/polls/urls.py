@@ -83,6 +83,15 @@ urlpatterns = [
 
 
   ####
+  #### Embed pictures
+  ####
+
+  path( "embed-pictures",
+        views.embed_pictures,
+        name="embed-pictures"),
+
+
+  ####
   #### A minimal example of form submission and redirection.
   ####
 

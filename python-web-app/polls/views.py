@@ -221,6 +221,16 @@ def demonstrateReverse (request, a, b, c):
 
 
 ####
+#### A page with embedded pictures
+####
+
+def embed_pictures ( request ) :
+  return render (
+    request,
+    "polls/embed-pictures.html" )
+
+
+####
 #### A silly form
 ####
 
