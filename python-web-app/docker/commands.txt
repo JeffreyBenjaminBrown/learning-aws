@@ -4,7 +4,7 @@
 docker run --name aws-py -it                      \
   -v /home/jeff/code/aws/apache2/:/mnt/apache2    \
   -v /home/jeff/code/aws/python-web-app/:/mnt/web \
-  -v /home/jeff/of/tax.co/dup/:/mnt/tax           \
+  -v /home/jeff/of/tax.co/web/:/mnt/tax           \
   -p 8000:8000 -d -h 127.0.0.1                    \
   ofiscal/tax.co:latest
 

@@ -20,7 +20,7 @@ from django.urls import include, path
 urlpatterns = [
     path('polls/',                # (part of) the URL
           include('polls.urls')), # where that (part of the URL) takes you
-    path('run_make/',
+    path('run-make/',
           include('run_make.urls')),
     path('admin/', admin.site.urls),
 ]
