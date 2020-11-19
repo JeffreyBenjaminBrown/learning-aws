@@ -17,4 +17,8 @@ urlpatterns = [
     path( 'thank-for-spec/<email>',
           views.thank_for_spec,
           name='thank-for-spec'),
+
+    path( 'download',
+          views.download,
+          name='download'),
 ]

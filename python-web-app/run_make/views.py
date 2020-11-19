@@ -53,3 +53,7 @@ def thank_for_spec ( request, email ):
   return render ( request,
                   'run_make/thank-for-spec.html',
                   { 'email' :  email } )
+
+def download ( request ):
+  return render ( request,
+                  'run_make/download.html' )
