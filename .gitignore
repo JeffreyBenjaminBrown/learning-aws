@@ -8,3 +8,4 @@ git-comment
 __pycache__/
 run_make/fake_make/*.json
 TAGS
+upload-tutorial

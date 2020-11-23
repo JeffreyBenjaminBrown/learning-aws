@@ -21,4 +21,8 @@ urlpatterns = [
     path( 'download',
           views.download,
           name='download'),
+
+    path( 'upload',
+           views.upload,
+           name="upload" )
 ]

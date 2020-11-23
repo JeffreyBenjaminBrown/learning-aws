@@ -15,7 +15,11 @@ from .secret import EMAIL_HOST
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...).
-BASE_DIR = os.path.dirname( os.path.dirname( os.path.abspath( __file__)))
+# TODO ? What magic is this? I can't evaluate __file__ in a shell.
+# But if I import this file, BASE_DIR evaluates to `/mnt/web`.
+BASE_DIR = os . path . dirname (
+    os . path . dirname (
+        os . path . abspath (  __file__ ) ) )
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -121,3 +125,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Apparently needed for uploads, per
+#  https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os . path . join ( BASE_DIR , 'media' )

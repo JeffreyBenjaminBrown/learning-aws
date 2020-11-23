@@ -310,21 +310,6 @@ def handle_uploaded_file ( f ):
       # ensures that large files don’t overwhelm your system’s memory."
       destination . write ( chunk )
 
-def upload_file_1 ( request ) :
-  # If all we want to do is save the file, upload_file_2 is simpler,
-  # because it does not require `handle_uploaded_file` function.
-  if request . method == 'POST':
-    form = UploadFileForm ( request . POST,
-                            request . FILES )
-    if form . is_valid() :
-      handle_uploaded_file ( request . FILES [ 'file' ] )
-      return HttpResponseRedirect ( '/success/url/' )
-  else:
-    form = UploadFileForm()
-  return render ( request,
-                  'upload.html',
-                  { 'form' :  form } )
-
 def upload_file_2(request):
     pass
   # To do this, I would have to be

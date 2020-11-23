@@ -1,3 +1,4 @@
+from django.core.files.storage import FileSystemStorage
 import json
 import os
 import subprocess
@@ -57,3 +58,19 @@ def thank_for_spec ( request, email ):
 def download ( request ):
   return render ( request,
                   'run_make/download.html' )
+
+def upload ( request ):
+    # from the tutorial:
+    #   https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html
+    #   https://github.com/sibtc/simple-file-upload
+    #     cloned at aws/upload-tutorial
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(
+            request,
+            'run_make/upload.html',
+            { 'uploaded_file_url' : uploaded_file_url } )
+    return render(request, 'run_make/upload.html')
