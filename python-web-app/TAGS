@@ -1,29 +1,77 @@
 
-manage.py,16
-def main(7,107
+wsgi-jbb/wsgi-scripts/app.py,23
+def application(5,131
+
+run_make/migrations/0002_auto_20201104_1820.py,22
+class Migration(6,92
+
+run_make/migrations/0001_initial.py,22
+class Migration(6,92
+
+run_make/migrations/0003_taxconfig_email.py,22
+class Migration(6,92
+
+run_make/apps.py,26
+class RunMakeConfig(4,36
+
+run_make/models.py,22
+class TaxConfig 4,33
+
+run_make/forms.py,51
+class TaxConfigForm 5,67
+  class Meta:Meta6,102
+
+run_make/views.py,70
+def index 13,248
+def ingest_spec 25,529
+def thank_for_spec 52,1522
+
+polls/migrations/0001_initial.py,23
+class Migration(7,125
 
 polls/apps.py,24
 class PollsConfig(4,36
 
-polls/admin.py,26
-class QuestionAdmin(5,72
+polls/models.py,127
+class Question 15,418
+  def __str__(23,837
+  def was_published_recently(26,893
+class Choice(42,1622
+  def __str__(48,1895
 
-polls/views.py,369
-def index_1(20,612
-def index_2(29,985
-def index_3(39,1357
-class IndexView(47,1578
-  def get_queryset(58,1957
-def detail_1 78,2634
-def detail_2 87,2964
-def detail_3(98,3370
-class DetailView_1(107,3861
-class DetailView_2(123,4570
-  def get_object(125,4607
-def results_1(144,5554
-class ResultsView(148,5719
-def vote 163,6141
-def demonstrateReverse 200,7659
+polls/admin.py,85
+class QuestionAdmin_1 6,75
+class ChoiceInline 15,333
+class QuestionAdmin_2 29,822
+
+polls/forms.py,49
+class NameForm 4,27
+class UploadFileForm 9,143
+
+polls/views.py,611
+def index_1(22,657
+def index_2 31,1030
+def index_3 41,1406
+class IndexView 50,1633
+  def get_queryset 62,2093
+def detail_1 82,2773
+def detail_2 91,3103
+def detail_3(102,3509
+class DetailView_1 111,4000
+class DetailView_2(127,4714
+  def get_object 129,4751
+def vote 149,5719
+def results_1 190,7509
+class ResultsView(197,7765
+def demonstrateReverse 207,7912
+def silly_form 230,8693
+def silly_form_process 236,8835
+def silly_form_result 244,9172
+def silly_form_2 251,9394
+def handle_uploaded_file 295,10903
+def upload_file_1 302,11208
+def upload_file_2(317,11772
+def upload_file_2(336,12414
 
 polls/tests.py,477
 class QuestionModelTests 12,227
@@ -39,30 +87,35 @@ class QuestionDetailViewTests(112,3822
   def test_future_question(113,3863
   def test_past_question(126,4306
 
-polls/models.py,127
-class Question(15,414
-  def __str__(22,798
-  def was_published_recently(24,850
-class Choice(30,1010
-  def __str__(36,1262
-
-polls/migrations/0001_initial.py,23
-class Migration(7,125
-
-ebdjango/__init__.py,0
-
-ebdjango/asgi.py,0
+manage.py,16
+def main(7,107
 
 ebdjango/urls.py,0
 
-ebdjango/settings.py,0
+ebdjango/asgi.py,0
+
+ebdjango/__init__.py,0
 
 ebdjango/wsgi.py,0
 
-polls/migrations/__init__.py,0
+ebdjango/secret.py,0
+
+ebdjango/settings.py,0
+
+polls/urls.py,0
 
 polls/__init__.py,0
 
-polls/temp.py,0
+polls/migrations/__init__.py,0
 
-polls/urls.py,0
+run_make/tests.py,0
+
+run_make/fake_make/go.py,0
+
+run_make/admin.py,0
+
+run_make/urls.py,0
+
+run_make/__init__.py,0
+
+run_make/migrations/__init__.py,0
