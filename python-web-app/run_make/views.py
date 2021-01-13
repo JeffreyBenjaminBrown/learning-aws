@@ -60,7 +60,7 @@ def download ( request ):
                   'run_make/download.html' )
 
 def upload ( request ):
-    # from the tutorial:
+    # From this tutorial:
     #   https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html
     #   https://github.com/sibtc/simple-file-upload
     #     cloned at aws/upload-tutorial
