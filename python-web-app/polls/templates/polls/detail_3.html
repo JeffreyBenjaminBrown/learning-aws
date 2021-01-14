@@ -6,17 +6,15 @@
 
 <!-- The %url% just after this comment could instead be "hard-coded" thus:
 <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
-but that makes the design brittle. The %url% function looks up things in the urls.py file(s). 
+but that makes the design brittle. The %url% function looks up things in the urls.py file(s).
 
-In 'polls:vote' below, 'polls' corresponds to the app_name in polls/urls.py.
-
-TODO : The %url% function below would seem to construct a URL like
-polls/vote/1, whereas it's supposed to be polls/1/vote, no?
+In 'polls:vote' below, 'polls' corresponds to the app_name in polls/urls.py,
+and 'vote' to one of the name fields of one of the paths defined there.
 -->
 <form action="{% url 'polls:vote' question.id %}" method="post">
   <!-- "action" is what will happen. In this case it will run "vote()",
        defined (I think) in polls/views.py. -->
-  <!-- "Whenever you create a form that alters data server-side, 
+  <!-- "Whenever you create a form that alters data server-side,
        use method="post". -->
   {% csrf_token %}
     <!-- "all POST forms that are targeted at internal URLs should use the

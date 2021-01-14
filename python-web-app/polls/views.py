@@ -20,10 +20,10 @@ indexTemplate = 'polls/index_2.html'
 # Also, IndexView below is another alternative to the index_x functions.
 
 def index_1(request):
-    latest_question_list = ( Question . objects . order_by
-                             ('-pub_date')
+    latest_question_list = ( Question . objects
+                             . order_by ('-pub_date')
                              [:5] )
-    output = ', ' . join ( [ q.question_text
+    output = ', ' . join ( [ q . question_text
                              for q in latest_question_list ] )
     return HttpResponse ( output )
 
@@ -33,7 +33,9 @@ def index_2 ( request ) :
     loader . get_template ( indexTemplate )
     . render (
         { 'latest_question_list' : # this name is meaningful to the template
-          Question . objects . order_by ( '-pub_date' ) [:5] },
+          Question . objects .
+          order_by ( '-pub_date' )
+          [:5] },
         request ) )
 
 # The last one's idiom is so common that there's shorthand for it.
@@ -44,21 +46,21 @@ def index_3 ( request ):
     indexTemplate,
     { 'latest_question_list' :
      ( Question . objects .
-      order_by (  '-pub_date' )
-      [:5] ) } )
+       order_by (  '-pub_date' )
+       [:5] ) } )
 
 class IndexView ( generic . ListView ):
-  # Optional. Defaults to '<app name>/<model name>_list.html'.
-  # I suspect `template_file` would be a better name than `template_name`.
+  # Override the default of '<app name>/<model name>_list.html'.
   template_name = indexTemplate
 
-  # Optional. Defaults to 'question_list'.
+  # Override the default of 'question_list'.
   # TODO: For that default, does django infer 'question'
   # from the 'get_queryset()' field below?
   context_object_name = (
       'latest_question_list' # this name is meaningful to the template
       )
 
+  # Override the default, which is to return all of them.
   def get_queryset ( self ):
     """Return the last five published questions."""
     return (
@@ -77,17 +79,17 @@ class IndexView ( generic . ListView ):
 detailTemplate = 'polls/detail_3.html'
 # PITFALL: There is no correspondence between the numbers `x` in the functions
 # `detail_x` defined below and the numbers x in `polls/detail_x.html` above.
-# Also, DetailView below is another alternative to the detail_x functions.
+# DetailView below is another alternative to the detail_x functions.
 
 def detail_1 (request, question_id):
   return HttpResponse (
     "This will eventually show question %s." % question_id )
 
 # This is better:
-# It actually shows the question, and its options.
-# It lets you vote
-#   (the template links the "vote" button to another page).
-# It gives a 404 error if the question_id isn't in the DB.
+#   It actually shows the question, and its options.
+#   It lets you vote
+#     (the template links the "vote" button to another page).
+#   It gives a 404 error if the question_id isn't in the DB.
 def detail_2 ( request, question_id ) :
   try:
     question = Question . Objects . get ( pk = question_id )
@@ -99,7 +101,7 @@ def detail_2 ( request, question_id ) :
 
 # That pattern, too, is so common that there's shorthand for it.
 # The following is equivalent to the preceding:
-def detail_3(request, question_id):
+def detail_3 ( request, question_id ):
     question = get_object_or_404 ( Question,
                                    pk = question_id )
     # "There’s also a get_list_or_404() function, which works just as get_object_or_404 (), but it uses filter() instead of get(), so it can find lots of stuff. It raises Http404 if the list is empty.
@@ -119,18 +121,18 @@ class DetailView_1 ( generic . DetailView ):
 
   model = Question # Defines the type of thing the view details.
 
-  template_name = detailTemplate # This is optional.
-  # By default, the DetailView generic view uses a template called
+  # Overrides the default, which would be a template called
   # <app name>/<model name>_detail.html.
+  template_name = detailTemplate
 
 # Equal to DetailView_1, except with an overridden method.
 class DetailView_2( DetailView_1 ):
 
-  def get_object ( self ) : # override to prohibit fetching from the future
+  def get_object ( self ) : # Override to prohibit fetching from the future.
     # PITFALL: Altering the context (not done here) can get hairy:
     # "Generally, get_context_data will merge the context data of all parent classes with those of the current class. To preserve this behavior in your own classes where you want to alter the context, you should be sure to call get_context_data on the super class."
     # https://docs.djangoproject.com/en/3.1/topics/class-based-views/generic-display/
-    obj = super().get_object()
+    obj = super () . get_object ()
     if obj . pub_date >= timezone . now():
       raise Http404 ( "Question not yet available." )
     return obj
@@ -140,8 +142,8 @@ class DetailView_2( DetailView_1 ):
 #### The vote() function
 ####
 
-# PITFALL: Question: How can vote() know what was chosen, if it's only
-# argument beyond the request is question_id?
+# PITFALL: Question: How can vote() know what was chosen,
+# given that its only argument beyond the request is question_id?
 # Answer: It's in the request.
 # See, e.g., the line `form action="{% url 'polls:vote' question.id %}"`
 # in templates/polls/detail_2.html, and search for the word "chosen".
@@ -160,7 +162,7 @@ def vote ( request, question_id ) :
     return render ( request, 'polls/detail.html', {
       'question': question,
       'error_message': "You didn't select a choice.",
-    })
+    } )
 
   selected_choice . votes += 1
   selected_choice . save ()
@@ -200,8 +202,7 @@ class ResultsView(generic.DetailView):
 
 
 ####
-#### (Evolution of)
-#### the results view
+#### The (url) `reverse` function.
 ####
 
 def demonstrateReverse (request, a, b, c):
@@ -294,61 +295,3 @@ def silly_form_2 ( request ):
   return render ( request,
                   'polls/silly-form-2.html',
                   { 'form' :  form } )
-
-
-####
-#### An upload form
-####
-
-# So far drawn entirely from
-#   https://docs.djangoproject.com/en/3.1/topics/http/file-uploads/
-
-def handle_uploaded_file ( f ):
-  with open ( 'testing-upload.txt', 'wb+' ) as destination:
-    for chunk in f . chunks ():
-      # "Looping over UploadedFile.chunks() instead of using read()
-      # ensures that large files don’t overwhelm your system’s memory."
-      destination . write ( chunk )
-
-def upload_file_2(request):
-    pass
-  # To do this, I would have to be
-  # "saving a file on a Model with a FileField",
-  # in particular, defining `.forms.ModelFormWithFileField`
-  # before using it below.
-  #
-  # if request . method == 'POST':
-  #   form = ModelFormWithFileField ( request . POST,
-  #                                   request . FILES )
-  #   if form . is_valid ():
-  #       form . save() # saves the file
-  #       return HttpResponseRedirect ( '/success/url/' )
-  # else:
-  #     form = ModelFormWithFileField ()
-  # return render ( request,
-  #                 'upload.html',
-  #                 { 'form' :  form } )
-
-def upload_file_2(request):
-    pass
-  # I did not understand the following passage from
-  #   https://docs.djangoproject.com/en/3.1/topics/http/file-uploads/
-  #
-  # If you are constructing an object manually, you can assign the file object from
-  # request.FILES to the file field in the model:
-  #
-  # from django.http import HttpResponseRedirect
-  # from django.shortcuts import render
-  # from .forms import UploadFileForm
-  # from .models import ModelWithFileField
-  #
-  # def upload_file(request):
-  #     if request.method == 'POST':
-  #         form = UploadFileForm(request.POST, request.FILES)
-  #         if form.is_valid():
-  #             instance = ModelWithFileField(file_field=request.FILES['file'])
-  #             instance.save()
-  #             return HttpResponseRedirect('/success/url/')
-  #     else:
-  #         form = UploadFileForm()
-  #     return render(request, 'upload.html', {'form': form})

@@ -17,10 +17,10 @@ urlpatterns = [
           # views.index_1,
           # views.index_2,
           # views.index_3,
-          views.IndexView.as_view()
+          views . IndexView . as_view ()
           ),
 
-        name='index'), # Optional. Useful for `URL reversing`.
+        name = 'index' ), # Optional. Useful for `URL reversing`.
         # See "demonstrateReverse" below, or the reading here:
         # https://docs.djangoproject.com/en/3.1/topics/http/urls/#naming-url-patterns
 
@@ -78,8 +78,8 @@ urlpatterns = [
 
   # Http://127.0.0.1:8000/polls/1/1/demonstrateReverse/1/
   path( '<int:a>/<int:b>/demonstrateReverse/<int:c>/',
-        views.demonstrateReverse,
-        name='nameOfUrlToDemonstrateReverse'),
+        views . demonstrateReverse,
+        name = 'nameOfUrlToDemonstrateReverse' ),
 
 
   ####
@@ -87,8 +87,8 @@ urlpatterns = [
   ####
 
   path( "embed-pictures",
-        views.embed_pictures,
-        name="embed-pictures"),
+        views . embed_pictures,
+        name = "embed-pictures" ),
 
 
   ####
@@ -99,7 +99,8 @@ urlpatterns = [
   # 'silly-form-process', which changes it (appends "Mr ") and sends it to
   # 'silly-form-result'. Although 'silly-form-process' is a URL,
   # it never displays a page to the user;
-  # they are taken straight from the first to the last.
+  # they are taken straight from the first URL to the last,
+  # skipping the midpoint.
 
   # Each URL lookup goes through this code,
   # which looks through polls.views for a function.
@@ -108,18 +109,18 @@ urlpatterns = [
   # and therefore uses no template.
 
   path( 'silly-form/',
-        views.silly_form,
-        name='silly-form' ),
+        views . silly_form,
+        name = 'silly-form' ),
 
   path( 'silly-form-2/',
-        views.silly_form_2,
-        name='silly-form-2' ),
+        views . silly_form_2,
+        name = 'silly-form-2' ),
 
   path( 'silly-form-process/',
-        views.silly_form_process,
-        name='silly-form-process' ),
+        views . silly_form_process,
+        name = 'silly-form-process' ),
 
   path( 'silly-form-result/<name_augmented>/',
-        views.silly_form_result,
-        name='silly-form-result' ),
+        views . silly_form_result,
+        name = 'silly-form-result' ),
 ]

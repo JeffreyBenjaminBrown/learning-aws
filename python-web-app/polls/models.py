@@ -23,8 +23,8 @@ class Question ( models . Model ):
   def __str__( self ):
     return self . question_text
 
-  def was_published_recently( self ):
-    t = timezone . now()
+  def was_published_recently ( self ):
+    t = timezone . now ()
     return ( t - datetime . timedelta( days = 365 )
              <= self . pub_date
              <= t )
@@ -39,11 +39,11 @@ class Question ( models . Model ):
     # It's like the optional argument to DateTimeField above,
     # which cannot be used for function definitions.
 
-class Choice( models . Model ):
+class Choice ( models . Model ):
   question = ( # refers to another table
       models . ForeignKey( Question,
-                          on_delete = models . CASCADE ) )
+                           on_delete = models . CASCADE ) )
   choice_text = models . CharField ( max_length = 200 )
   votes = models . IntegerField ( default = 0 )
-  def __str__( self):
+  def __str__ ( self ):
     return self . choice_text
