@@ -6,9 +6,9 @@ from . import views
 app_name = 'run_make'
 
 urlpatterns = [
-    path( '',
-          views.index,
-          name='index'),
+    path( 'write_time',
+          views.write_time,
+          name='write_time'),
 
     path( 'ingest-spec',
           views.ingest_spec,

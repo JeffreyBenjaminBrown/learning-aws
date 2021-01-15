@@ -11,7 +11,8 @@ from django.urls import reverse
 from .forms import TaxConfigForm
 
 
-def index ( request ):
+def write_time ( request ):
+  """Demonstrates how visiting a URL can be made to (create and) write to a file."""
   wd = os . getcwd ()
   now = datetime . now () . timestamp()
   with open( "/home/appuser/" + str ( now ),
@@ -19,16 +20,17 @@ def index ( request ):
     f . write( "Hello?\n" )
   return render (
     request,
-    'run_make/index.html',
+    'run_make/write_time.html',
     { "wd" : wd,
       "now" : now } )
 
 def ingest_spec ( request ):
-  # PITFALL: Strange, slightly-recursive call structure.
-  # The user first visits this URL with a GET.
-  # They see a blank form, corresponding to the second ("else") branch below.
-  # Once they fill out and submit the form, it is sent via POST
-  # to this same function, and goes through the first ("if") branch.
+  """ PITFALL: Strange, slightly-recursive call structure.
+  The user first visits this URL with a GET.
+  They see a blank form, corresponding to the second ("else") branch below.
+  Once they fill out and submit the form, it is sent via POST
+  to this same function, and goes through the first ("if") branch.
+  """
 
   if request . method == 'POST':
     form = TaxConfigForm ( request . POST )
@@ -44,11 +46,11 @@ def ingest_spec ( request ):
           kwargs = { "email" : form . cleaned_data [ "email" ]
                    } ) )
 
-  else: form = TaxConfigForm ()
-
-  return render ( request,
-                  'run_make/ingest-spec.html',
-                  { 'form' :  form } )
+  else:
+      form = TaxConfigForm ()
+      return render ( request,
+                      'run_make/ingest-spec.html',
+                      { 'form' :  form } )
 
 def thank_for_spec ( request, email ):
   return render ( request,
