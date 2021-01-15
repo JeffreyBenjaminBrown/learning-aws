@@ -49,12 +49,12 @@ def ingest_spec ( request ):
   else:
       form = TaxConfigForm ()
       return render ( request,
-                      'run_make/ingest-spec.html',
+                      'run_make/ingest_spec.html',
                       { 'form' :  form } )
 
 def thank_for_spec ( request, email ):
   return render ( request,
-                  'run_make/thank-for-spec.html',
+                  'run_make/thank_for_spec.html',
                   { 'email' :  email } )
 
 def download ( request ):
