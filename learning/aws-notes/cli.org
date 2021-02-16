@@ -1,16 +1,16 @@
 The Command Line Interface for AWS.
 * setup
 ** there's also the (slower) web UI
- Individual files can be uploaded and downloaded (by mouse)
- to S3 from aws.amazon.com
+   Individual files can be uploaded and downloaded (by mouse)
+   to S3 from aws.amazon.com
 ** create a user with IAM
 *** find IAM on aws.amazon.com
 *** find Users in the left scrollbar
 *** click Add User
- choose "Programmatic Access"
- (the other choice requires typing a password each time)
+    choose "Programmatic Access"
+    (the other choice requires typing a password each time)
 *** when confronted with policies, choose an existing one
- Administrative Access = total access.
+    Administrative Access = total access.
 ** install, configure the AWS CLI
  at shell: "aws configure"
  use the key fields from file downloaded from IAM
