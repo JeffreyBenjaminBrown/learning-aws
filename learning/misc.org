@@ -1,4 +1,3 @@
-* TODO push new docker image
 * TODO refs | URLs
 ** all lessons
 https://aws.amazon.com/getting-started/use-cases
@@ -21,8 +20,6 @@ There are even more tutorials on the same theme.
 **** Fanout event notifications
  https://aws.amazon.com/getting-started/tutorials/send-fanout-event-notifications/?trk=gs_card
 * TODO use Emacs from an instance
-* internet
-** www.example.com is a subdomain of example.com
 * for saving money
 ** "requester pays" is an S3 option
 * AWS lingo
@@ -43,8 +40,8 @@ Have URLs.
 Are to control who can access what.
 * TODO AWS services I might want to learn
 ** AWS storage gateway
-Someone describes it as a dropbox client but for S3.
-AWS seems to suggest it does lots of other stuff.
+   Someone describes it as a dropbox client but for S3.
+   AWS seems to suggest it does lots of other stuff.
 * web endpoint formatting depends on region
 A website's endpoing takes one of two almost identical forms,
 depending on the region:
@@ -53,4 +50,3 @@ depending on the region:
 In my case it's these:
       jefbrown.net.s3-website-us-east-1.amazonaws.com
 under.jefbrown.net.s3-website-us-east-1.amazonaws.com
-* PITFALL: my domain name is missing an f
